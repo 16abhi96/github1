@@ -1,0 +1,50 @@
+create table userrole(user_name varchar2(20) PRIMARY KEY,password varchar2(20), rolecode varchar2(20));
+
+create table accounts(account_number number(10) primary key, user_name varchar(20) references userrole(user_name));
+
+create table business_info(business_id varchar(10) primary key, business_name varchar(20));
+
+create table policy(policy_number number(10) primary key, policy_premium number(8,2));
+
+create table policy_details(accountnumber number(10) references accounts(account_number), policynumber 
+references policy(policy_number), questionid varchar(15), answer varchar(30), businessid varchar(10) 
+references business_info(business_id));
+
+create table claim_creation(claim_number number(10) primary key, claimreason varchar(30), accidentlocation 
+varchar(40), accidentcity varchar(15), accidentstate varchar(15), accidentzip number(5), claimtype
+varchar(30), policynumber number(10) references policy(policy_number));
+
+create table claim_details(claimnumber number(10) references claim_creation(claim_number),question1 varchar(20),
+question2 varchar(20),question3 varchar(20),question4 varchar(20),question5 varchar(20),answer1 varchar(20),
+answer2 varchar(20),answer3 varchar(20),answer4 varchar(20),answer5 varchar(20));
+
+create table questions(businessid varchar(10) references business_info(business_id),question1 varchar(20),
+question2 varchar(20),question3 varchar(20),question4 varchar(20),question5 varchar(20),answer1 varchar(20),
+answer2 varchar(20),answer3 varchar(20),answer4 varchar(20),answer5 varchar(20));  
+
+insert into userrole values('john','abc123','admin1');
+
+insert into accounts values(15001, 'john');
+
+insert into business_info values('#1','coaching');
+
+insert into policy values(56, 500);
+
+insert into policy_details values( 15001,56,'q1','a1','#1');
+
+insert into claim_creation values( 1,'fire','olive','chennai','tamilnadu',88,'abc', 56);
+
+insert into claim_details values( 1, 'damage happen', 'kjhjhi','hfjsj','bfjnkjn','fjsk','hhjfn','hsjh','hrjkkd','jhtr','htejh');
+
+insert into questions values( '#1', 'damage happen', 'kjhjhi','hfjsj','bfjnkjn','fjsk','hhjfn','hsjh','hrjkkd','jhtr','htejh');
+
+select r.rolecode, a.account_number from userrole r inner join accounts a on r.user_name= a.username;
+
+select p.policynumber,a.username from policy_details p inner join accounts a on p. accountnumber=a.account_number;
+
+select pp.policy_premium,pd.accountnumber from policy pp inner join policy_details pd on pp.policy_number = pd.policynumber;
+
+
+select c.claimreason,p.policy_premium from claim_creation c inner join policy p on c.policynumber=p.policy_number;
+
+select q.question1,b.business_name from questions q inner join business_info b on q.businessid=b.business_id; 
