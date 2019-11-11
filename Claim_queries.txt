@@ -1,50 +1,147 @@
-create table userrole(user_name varchar2(20) PRIMARY KEY,password varchar2(20), rolecode varchar2(20));
+create table userrole(userName varchar2(20) primary key,password varchar2(20), roleCode varchar2(20));
 
-create table accounts(account_number number(10) primary key, user_name varchar(20) references userrole(user_name));
+create table accounts(accountNumber number(10) primary key, userName varchar(20) references userrole(userName));
 
-create table business_info(business_id varchar(10) primary key, business_name varchar(20));
+create table businessinfo(businessId varchar(10) primary key, businessName varchar(20));
 
-create table policy(policy_number number(10) primary key, policy_premium number(8,2));
+create table policy(policyNumber number(10) primary key, policyPremium number(8,2));
 
-create table policy_details(accountnumber number(10) references accounts(account_number), policynumber 
-references policy(policy_number), questionid varchar(15), answer varchar(30), businessid varchar(10) 
-references business_info(business_id));
+create table policydetails(accountNumber number(10) references accounts(accountNumber), policyNumber number(10) 
+references policy(policyNumber), questionId varchar(15), answer varchar(30), businessId varchar(10) 
+references businessinfo(businessId));
 
-create table claim_creation(claim_number number(10) primary key, claimreason varchar(30), accidentlocation 
-varchar(40), accidentcity varchar(15), accidentstate varchar(15), accidentzip number(5), claimtype
-varchar(30), policynumber number(10) references policy(policy_number));
+create table claimcreation(claimNumber number(10) primary key, claimReason varchar(30), accidentLocation 
+varchar(40), accidentCity varchar(15), accidentState varchar(15), accidentZip number(5), claimType
+varchar(30), policyNumber number(10) references policy(policyNumber));
 
-create table claim_details(claimnumber number(10) references claim_creation(claim_number),question1 varchar(20),
+create table claimdetails(claimNumber number(10) references claimcreation(claimNumber),question1 varchar(20),
 question2 varchar(20),question3 varchar(20),question4 varchar(20),question5 varchar(20),answer1 varchar(20),
 answer2 varchar(20),answer3 varchar(20),answer4 varchar(20),answer5 varchar(20));
 
-create table questions(businessid varchar(10) references business_info(business_id),question1 varchar(20),
+create table questions(businessId varchar(10) references businessinfo(businessId),question1 varchar(20),
 question2 varchar(20),question3 varchar(20),question4 varchar(20),question5 varchar(20),answer1 varchar(20),
 answer2 varchar(20),answer3 varchar(20),answer4 varchar(20),answer5 varchar(20));  
 
-insert into userrole values('john','abc123','admin1');
+insert into userrole values('root','root','admin');
 
-insert into accounts values(15001, 'john');
+insert into userrole values('ashish','abc123','agent');
 
-insert into business_info values('#1','coaching');
+insert into userrole values('ashutosh','abc123','agent');
 
-insert into policy values(56, 500);
+insert into userrole values('manisha','abc123','insured');
 
-insert into policy_details values( 15001,56,'q1','a1','#1');
+insert into userrole values('sumantha','abc123','insured');
 
-insert into claim_creation values( 1,'fire','olive','chennai','tamilnadu',88,'abc', 56);
-
-insert into claim_details values( 1, 'damage happen', 'kjhjhi','hfjsj','bfjnkjn','fjsk','hhjfn','hsjh','hrjkkd','jhtr','htejh');
-
-insert into questions values( '#1', 'damage happen', 'kjhjhi','hfjsj','bfjnkjn','fjsk','hhjfn','hsjh','hrjkkd','jhtr','htejh');
-
-select r.rolecode, a.account_number from userrole r inner join accounts a on r.user_name= a.username;
-
-select p.policynumber,a.username from policy_details p inner join accounts a on p. accountnumber=a.account_number;
-
-select pp.policy_premium,pd.accountnumber from policy pp inner join policy_details pd on pp.policy_number = pd.policynumber;
+insert into userrole values('kavitha','abc123','insured');
 
 
-select c.claimreason,p.policy_premium from claim_creation c inner join policy p on c.policynumber=p.policy_number;
 
-select q.question1,b.business_name from questions q inner join business_info b on q.businessid=b.business_id; 
+insert into accounts values(15001, 'root');
+
+insert into accounts values(15002, 'ashish');
+
+insert into accounts values(15003, 'ashutosh');
+
+insert into accounts values(15004, 'manisha');
+
+insert into accounts values(15005, 'sumantha');
+
+insert into accounts values(15006, 'kavitha');
+
+insert into accounts values(15007, 'ashish');
+
+insert into accounts values(15008, 'ashish');
+
+
+
+
+
+insert into policy values(1000,5000);
+
+insert into policy values(1001,10000);
+
+insert into policy values(1002,8000);
+
+insert into policy values(1003,9500);
+
+insert into policy values(1004,150000);
+
+insert into policy values(1005,15000);
+
+insert into policy values(1006,18000);
+
+insert into policy values(1007,180000);
+
+insert into policy values(1008,21000);
+
+insert into policy values(1009,23900);
+
+insert into policy values(1010,256900);
+
+insert into policy values(1011,26098);
+
+insert into policy values(1012,70000);
+
+insert into policy values(1013,75600);
+
+insert into policy values(1014,780987);
+
+insert into policy values(1015,56890);
+
+insert into policy values(1016,34500);
+
+insert into policy values(1017,35000);
+
+insert into policy values(1018,42000);
+
+insert into policy values(1019,75450);
+
+insert into policy values(1020,25800);
+
+insert into policy values(1021,65700);
+
+insert into policy values(1022,6780);
+
+
+
+insert into businessinfo values('001','Vehicle');
+insert into businessinfo values('002','Restaurent');
+insert into businessinfo values('003','Health');
+insert into businessinfo values('004','Home');
+insert into businessinfo values('005','Auto');
+insert into businessinfo values('006','Apartment');
+insert into businessinfo values('007','General Merchant');
+
+
+insert into policydetails values(15001,1001,'','','002');
+insert into policydetails values(15001,1013,'','','003');
+insert into policydetails values(15001,1019,'','','004');
+
+insert into policydetails values(15002,1004,'','','001');
+insert into policydetails values(15002,1011,'','','002');
+insert into policydetails values(15002,1006,'','','005');
+insert into policydetails values(15002,1009,'','','006');
+
+insert into policydetails values(15003,1008,'','','007');
+insert into policydetails values(15003,1015,'','','003');
+insert into policydetails values(15003,1010,'','','005');
+insert into policydetails values(15003,1005,'','','004');
+
+insert into policydetails values(15004,1012,'','','002');
+insert into policydetails values(15004,1017,'','','001');
+insert into policydetails values(15004,1014,'','','007');
+insert into policydetails values(15004,1007,'','','006');
+
+insert into policydetails values(15005,1016,'','','002');
+insert into policydetails values(15005,1002,'','','004');
+
+insert into policydetails values(15006,1018,'','','005');
+insert into policydetails values(15006,1003,'','','003');
+
+insert into policydetails values(15006,1020,'','','004');
+
+insert into policydetails values(15006,1021,'','','006');
+
+
+
+
