@@ -1,0 +1,175 @@
+create table userrole(userName varchar2(20) primary key,password varchar2(20), roleCode varchar2(20));
+
+create table accounts(accountNumber number(10) primary key, userName varchar(20) references userrole(userName));
+
+create table businessinfo(businessId varchar(10) primary key, businessName varchar(20));
+
+create table policy(policyNumber number(10) primary key, policyPremium number(8,2));
+
+create table policydetails(accountNumber number(10) references accounts(accountNumber), policyNumber number(10) 
+references policy(policyNumber), questionId varchar(15), answer varchar(30), businessId varchar(10) 
+references businessinfo(businessId));
+
+create table claimcreation(claimNumber number(10) primary key, claimReason varchar(30), accidentLocation 
+varchar(40), accidentCity varchar(15), accidentState varchar(15), accidentZip number(5), claimType
+varchar(30), policyNumber number(10) references policy(policyNumber));
+
+create table claimdetails(claimNumber number(10) references claimcreation(claimNumber),question1 varchar2(60),
+question2 varchar2(60),question3 varchar2(60),question4 varchar2(60),question5 varchar2(60),answer1 varchar2(60),
+answer2 varchar2(60),answer3 varchar2(60),answer4 varchar2(60),answer5 varchar2(60));
+
+create table questions(businessId varchar(10) references businessinfo(businessId),question1 varchar2(60),
+question2 varchar2(60),question3 varchar2(60),question4 varchar2(60),question5 varchar2(60),answer1 varchar2(60),
+answer2 varchar2(60),answer3 varchar2(60),answer4 varchar2(60),answer5 varchar2(60));  
+
+insert into userrole values('root','root','admin');
+
+insert into userrole values('ashish','abc123','agent');
+
+insert into userrole values('ashutosh','abc123','agent');
+
+insert into userrole values('manisha','abc123','insured');
+
+insert into userrole values('sumantha','abc123','insured');
+
+insert into userrole values('kavitha','abc123','insured');
+
+
+
+insert into accounts values(15001, 'root');
+
+insert into accounts values(15002, 'ashish');
+
+insert into accounts values(15003, 'ashutosh');
+
+insert into accounts values(15004, 'manisha');
+
+insert into accounts values(15005, 'sumantha');
+
+insert into accounts values(15006, 'kavitha');
+
+insert into accounts values(15007, 'ashish');
+
+insert into accounts values(15008, 'ashish');
+
+
+
+
+
+insert into policy values(1000,5000);
+
+insert into policy values(1001,10000);
+
+insert into policy values(1002,8000);
+
+insert into policy values(1003,9500);
+
+insert into policy values(1004,150000);
+
+insert into policy values(1005,15000);
+
+insert into policy values(1006,18000);
+
+insert into policy values(1007,180000);
+
+insert into policy values(1008,21000);
+
+insert into policy values(1009,23900);
+
+insert into policy values(1010,256900);
+
+insert into policy values(1011,26098);
+
+insert into policy values(1012,70000);
+
+insert into policy values(1013,75600);
+
+insert into policy values(1014,780987);
+
+insert into policy values(1015,56890);
+
+insert into policy values(1016,34500);
+
+insert into policy values(1017,35000);
+
+insert into policy values(1018,42000);
+
+insert into policy values(1019,75450);
+
+insert into policy values(1020,25800);
+
+insert into policy values(1021,65700);
+
+insert into policy values(1022,6780);
+
+
+
+insert into businessinfo values('001','Vehicle');
+insert into businessinfo values('002','Restaurent');
+insert into businessinfo values('003','Health');
+insert into businessinfo values('004','Home');
+insert into businessinfo values('005','Auto');
+insert into businessinfo values('006','Apartment');
+insert into businessinfo values('007','General Merchant');
+
+
+insert into policydetails values(15001,1001,'','','002');
+insert into policydetails values(15001,1013,'','','003');
+insert into policydetails values(15001,1019,'','','004');
+
+insert into policydetails values(15002,1004,'','','001');
+insert into policydetails values(15002,1011,'','','002');
+insert into policydetails values(15002,1006,'','','005');
+insert into policydetails values(15002,1009,'','','006');
+
+insert into policydetails values(15003,1008,'','','007');
+insert into policydetails values(15003,1015,'','','003');
+insert into policydetails values(15003,1010,'','','005');
+insert into policydetails values(15003,1005,'','','004');
+
+insert into policydetails values(15004,1012,'','','002');
+insert into policydetails values(15004,1017,'','','001');
+insert into policydetails values(15004,1014,'','','007');
+insert into policydetails values(15004,1007,'','','006');
+
+insert into policydetails values(15005,1016,'','','002');
+insert into policydetails values(15005,1002,'','','004');
+
+insert into policydetails values(15006,1018,'','','005');
+insert into policydetails values(15006,1003,'','','003');s
+
+insert into policydetails values(15006,1020,'','','004');
+
+insert into policydetails values(15006,1021,'','','006');
+
+
+insert into questions values('001','What is the type of vehicle?','How much is the damage?','Was the Police Verification done?','What is the vehicle model Year?',
+'What is the daily commute distance?','Light:Heavy:Truck','25%:50%:75%','Yes:No:In process','Less than 2000:2001 to 2010:More than 2010',
+'Less than 21:21 to 50:More than 50');
+
+insert into questions values('002','What is the restaurent type?','What is restaurent area?','Was the Police Verification done?','How much is the property damage?',
+'How much is the Equipment breakdown?','Dining:Dining with bar:Dining with bar and Entertainment','Less than 1500 sq.ft:1500 to 5000sq.ft:More than 5000sq.ft',
+'Yes:No:In process','Less than 5,00,000:5,00,000 to 15,00,000:More than 15,00,000','Less than 50,000:50,000 to 1,00,000:More than 1,00,000');
+
+insert into questions values('003','What is the health problem?','If accident, Was the Police Verification done?','What is the type of hospital admitted?',
+'Do you have medical bills?','Number of days in the Hospital?','Accident:Chronic disease:Heart-Attack','Yes:No:In process','Government:Super-Speciality:Private',
+'Yes:No:Few','Less than 10 days:10-15 days:More than 15 days');
+
+insert into questions values('004','How did damage happen?','How much was the damage?','What is the area of the house?','Was the Police Verification done?',
+'How much is the property damage?','Natural Disasters:Accident:Fire','25%:50%:75%','Less than 1500 sq.ft:1500 to 5000sq.ft:More than 5000sq.ft','Yes:No:In process',
+'Upto 5,00,000:5,00,000 to 10,00,000:More than 10,00,000');
+
+insert into questions values('005','How did damage happen?','How much is the damage','Was the Police Verification done','What is the vehicle model year',
+'What is the daily commute distance','Natural Disasters:Accident:Fire','25%:50%:75%','Yes:No:In process','Less than 2000:2001 to 2010:More than 2010',
+'Less than 21:21 to 50:More than 50');
+
+insert into questions values('006','What is the area of Apartment?','Apartment Build Year?','Number of Floors in the apartment?','How did damage happen?',
+'How much is the property damage?','upto 1500 sq.ft:from 1500 to 5000 sq.ft:More than 5000 sq.ft','Before 2000:2000-2010:After 2010','Less than 10:10-30:More than 30',
+'Natural Disasters:Accident:Fire:Other','Less than 5,00,000:5,00,000 to 10,00,000:More than 10,00,000');
+
+insert into questions values('007',' What is the Business type?','How did damage happen?','What is the Asset Value?','What is the property size?',
+'How much is the property damage?','General Store:Hardware:Clothing','Natural Disasters:Accident:Fire:Other','Less than 10,00,000:10,00,000 to 25,00,000:More than 25,00,000',
+'Less than 5000 sq.ft:5000 to 10,000 sq.ft:More than 10,000 sq.ft','Upto 5,00,000:5,00,000 to 10,00,000:More than 10,00,000');
+
+
+
