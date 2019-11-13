@@ -11,7 +11,7 @@ references policy(policyNumber), questionId varchar(15), answer varchar(30), bus
 references businessinfo(businessId));
 
 create table claimcreation(claimNumber number(10) primary key, claimReason varchar(30), accidentLocation 
-varchar(40), accidentCity varchar(15), accidentState varchar(15), accidentZip number(5), claimType
+varchar(40), accidentCity varchar(15), accidentState varchar(15), accidentZip number(6), claimType
 varchar(30), policyNumber number(10) references policy(policyNumber));
 
 create table claimdetails(claimNumber number(10) references claimcreation(claimNumber),question1 varchar2(60),
@@ -20,37 +20,37 @@ answer2 varchar2(60),answer3 varchar2(60),answer4 varchar2(60),answer5 varchar2(
 
 create table questions(businessId varchar(10) references businessinfo(businessId),question1 varchar2(60),
 question2 varchar2(60),question3 varchar2(60),question4 varchar2(60),question5 varchar2(60),answer1 varchar2(60),
-answer2 varchar2(60),answer3 varchar2(60),answer4 varchar2(60),answer5 varchar2(60));  
+answer2 varchar2(60),answer3 varchar2(90),answer4 varchar2(90),answer5 varchar2(90));  
 
 insert into userrole values('root','root','admin');
 
-insert into userrole values('ashish','abc123','agent');
+insert into userrole values('ashish@1','abc123','agent');
 
-insert into userrole values('ashutosh','abc123','agent');
+insert into userrole values('ashutosh@1','abc123','agent');
 
-insert into userrole values('manisha','abc123','insured');
+insert into userrole values('manisha@1','abc123','insured');
 
-insert into userrole values('sumantha','abc123','insured');
+insert into userrole values('sumantha@1','abc123','insured');
 
-insert into userrole values('kavitha','abc123','insured');
+insert into userrole values('kavitha@1','abc123','insured');
 
 
 
 insert into accounts values(15001, 'root');
 
-insert into accounts values(15002, 'ashish');
+insert into accounts values(15002, 'ashish@1');
 
-insert into accounts values(15003, 'ashutosh');
+insert into accounts values(15003, 'ashutosh@1');
 
-insert into accounts values(15004, 'manisha');
+insert into accounts values(15004, 'manisha@1');
 
-insert into accounts values(15005, 'sumantha');
+insert into accounts values(15005, 'sumantha@1');
 
-insert into accounts values(15006, 'kavitha');
+insert into accounts values(15006, 'kavitha@1');
 
-insert into accounts values(15007, 'ashish');
+insert into accounts values(15007, 'ashish@1');
 
-insert into accounts values(15008, 'ashish');
+insert into accounts values(15008, 'ashish@1');
 
 
 
@@ -136,7 +136,7 @@ insert into policydetails values(15005,1016,'','','002');
 insert into policydetails values(15005,1002,'','','004');
 
 insert into policydetails values(15006,1018,'','','005');
-insert into policydetails values(15006,1003,'','','003');s
+insert into policydetails values(15006,1003,'','','003');
 
 insert into policydetails values(15006,1020,'','','004');
 
@@ -170,6 +170,8 @@ insert into questions values('006','What is the area of Apartment?','Apartment B
 insert into questions values('007',' What is the Business type?','How did damage happen?','What is the Asset Value?','What is the property size?',
 'How much is the property damage?','General Store:Hardware:Clothing','Natural Disasters:Accident:Fire:Other','Less than 10,00,000:10,00,000 to 25,00,000:More than 25,00,000',
 'Less than 5000 sq.ft:5000 to 10,000 sq.ft:More than 10,000 sq.ft','Upto 5,00,000:5,00,000 to 10,00,000:More than 10,00,000');
+
+create sequence claim_sequence start with 101 increment by 1;
 
 
 
